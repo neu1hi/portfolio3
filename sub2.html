@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shopa</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    
+    <!--jq메뉴버튼 링크 시작-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            mobile_menu();
+        });
+
+        function mobile_menu() {
+            /* 변수 선언 */
+            var $menu = null;
+            var $left_gnb = null; // 영역 전체
+            var $depth1_wrap = null;
+            var $depth1 = null;
+            var $depth1_btn = null;
+
+            /* 시작 함수 */
+            function start() {
+                init();
+                init_event();
+            }
+            /* 변수 초기화 함수 */
+            function init() {
+                $menu = $('.jq_menu');
+                $left_gnb = $('.left_gnbWrap'); // 영역 전체
+                $depth1_wrap = $('.left_gnb>li');
+                $depth1 = $depth1_wrap.children('ul');
+                $depth1_btn = $depth1_wrap.children('a');
+            }
+            /* 이벤트 함수 */
+            function init_event() {
+
+                /* 모바일 메뉴 버튼 클릭했을때 모바일 메뉴영역 나오게 하기 */
+                $menu.click(function(event) {
+                    event.preventDefault();
+                    $left_gnb.addClass('on');
+                });
+
+                /* x버튼 눌렀을때 모바일 메뉴 닫기 */
+                $('.close').click(function(event) {
+                    event.preventDefault();
+
+                    $left_gnb.removeClass('on');
+
+                    // x버튼 누르면 시간차 약간두고 소메뉴 닫히게 하기
+                    setTimeout(function() {
+                        $depth1_btn.removeClass('on');
+                        $depth1.slideUp();
+                    }, 300)
+                });
+
+                /* depth1의 각메뉴 클릭시 depth2 나오게 하기 */
+                $depth1_btn.click(function(event) {
+                    event.preventDefault();
+                    var $this = $(this);
+                    var $this_ul = $this.siblings('ul');
+
+                    var check = $this.hasClass('on');
+                    if (check) {
+                        $this.removeClass('on');
+                        $this_ul.stop(true, true).slideUp();
+                    } else {
+                        $depth1_btn.removeClass('on');
+                        $depth1.stop().slideUp();
+                        $this.addClass('on');
+                        $this_ul.stop(true, true).slideDown();
+                    }
+                });
+
+                /* 디바이스 크기 변경시 모바일 메뉴영역 숨기기 */
+                $(window).resize(function() {
+                    $left_gnb.removeClass('on');
+                });
+            }
+
+            start(); // 시작 호출
+        }
+    </script>
+    <!--jq메뉴버튼 링크 끝-->
+    
+</head>
+
+<body>
+    <div id=wrap>
+        <header id="header">
+            <div class="inner">
+                <div class="logo">
+                    <i>
+                        <a href="index.html"><img src="img/logo.png" alt="로고"></a>
+                    </i>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="sub2.html">ABOUT US</a>
+                        <ul class="nonwavy">
+                            <li><a href="sub2.html">인사말</a></li>
+                            <li><a href="#">메뉴1</a></li>
+                            <li><a href="#">메뉴2</a></li>
+                            <li><a href="#">메뉴3</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="sub3.html">MY ACCOUNT</a>
+                        <ul class="nonwavy">
+                            <li><a href="sub3.html">shopaMALL</a></li>
+                            <li><a href="#">메뉴1</a></li>
+                            <li><a href="#">메뉴2</a></li>
+                            <li><a href="#">메뉴3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <li><a href="sub1.html">HELP</a>
+                        <ul class="nonwavy">
+                            <li><a href="sub1.html">입점절차</a></li>
+                            <li><a href="#">메뉴1</a></li>
+                            <li><a href="#">메뉴2</a></li>
+                            <li><a href="#">메뉴3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <li><a href="login.html" target="_blank">MY ORDER</a>
+                        <ul class="nonwavy">
+                            <li><a href="login.html" target="_blank">장바구니</a></li>
+                            <li><a href="#">메뉴1</a></li>
+                            <li><a href="#">메뉴2</a></li>
+                            <li><a href="#">메뉴3</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="mall">
+                    <i>
+                        <a href="sub3.html"><img src="img/shopamall.png" alt="shopaMALL"></a>
+                    </i>
+                </div>
+                <div class="login">
+                    <a href="login.html">LOGIN</a>
+                </div>
+                
+                <!--jq메뉴버튼 시작-->
+                <div class="jq_menu"><img src="img/ico_menu.png" alt="메뉴버튼"></div>
+                <nav class="left_gnbWrap">
+                            <a href="#" class="close">
+                                <img src="img/btn_fixClose.png" alt="">
+                            </a>
+                            <ul class="left_gnb">
+                                <li>
+                                    <a href="#">menu1</a>
+                                    <ul>
+                                        <li><a href="#">sub1</a></li>
+                                        <li><a href="#">sub2</a></li>
+                                        <li><a href="#">sub3</a></li>
+                                        <li><a href="#">sub4</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">menu2</a>
+                                    <ul>
+                                        <li><a href="#">sub1</a></li>
+                                        <li><a href="#">sub2</a></li>
+                                        <li><a href="#">sub3</a></li>
+                                        <li><a href="#">sub4</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">menu3</a>
+                                    <ul>
+                                        <li><a href="#">sub1</a></li>
+                                        <li><a href="#">sub2</a></li>
+                                        <li><a href="#">sub3</a></li>
+                                        <li><a href="#">sub4</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">menu4</a>
+                                    <ul>
+                                        <li><a href="#">sub1</a></li>
+                                        <li><a href="#">sub2</a></li>
+                                        <li><a href="#">sub3</a></li>
+                                        <li><a href="#">sub4</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--jq메뉴버튼 끝-->
+                
+                <div class="m_menu">
+                    <i>
+                        <img src="img/m_menu.png" alt="모바일메뉴버튼">
+                    </i>
+
+                    <ul>
+                        <li>
+                            <a href="sub2.html">ABOUT US</a>
+                        </li>
+                        <li>
+                            <a href="sub3.html">MY ACCOUNT</a>
+                        </li>
+                        <li>
+                            <a href="sub1.html">HELP</a>
+                        </li>
+                        <li>
+                            <a href="login.html" target="_blank">MY ORDER</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--after-->
+            </div>
+        </header>
+
+
+        <article id=s2_title>
+            <i class="ls_left">
+                <img src="img/speaker.png" alt="왼쪽스피커">
+            </i>
+            <i class="ls_right">
+                <img src="img/speaker.png" alt="오른쪽스피커">
+            </i>
+            <h2>
+                인사말
+            </h2>
+            <p>
+                CEO
+            </p>
+        </article>
+
+        <div class="home_set">
+            <div class="s1_inner">
+                <i class="home">
+                    <img src="img/home.png" alt="홈">
+                </i>
+                <span>ABOUT US</span>
+                <i class="home_more">
+                    <img src="img/menu_more.png" alt=">">
+                </i>
+                <span>인사말</span>
+            </div>
+        </div>
+
+
+
+        <main id="s2_container">
+            <div class="s1_inner">
+                <div class="flex3">
+                    <div class="s2_bg">
+                        <i>
+                            <img src="img/ceo11.png" alt="ceo">
+                        </i>
+                    </div>
+                    <div class="s2_text">
+                        <h2>
+                            "간편하게 성공적인<br>
+                            쇼핑을 추구하는 기업"
+                        </h2>
+
+                        <p>
+                            shop는 2020년 창립 이후<br>
+                            고객의 신뢰를 최우선으로 하는 '고객중심경영'과 고객이 지불한 가치보다 더 높은<br>
+                            가치를 제공하기 위해 힘쓰겠습니다. 더 나아가<br>
+                            <span class="strong_line">"언제 어디서나 쉽고 간편하게 즐길 수 있는 쇼핑 문화"</span>를 만들기위해<br>
+                            노력하겠습니다.<br>
+                            항상 현실에 안주하지 않는 마음가짐으로 '어제와 다른오늘, 오늘과 다른 내일'을<br>
+                            만들어갈 shopa와 함꼐 해주십시오.<br>
+                            감사합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <div class="m_sns_set">
+            <div class="s1_inner">
+                <i class="m_facebook">
+                    <img class="frontimg" src="img/facebook2.png" alt="페이스북">
+                    <img class="b_img" src="img/facebook3.png" alt="페이스북">
+                </i>
+                <i class="m_dubbing">
+                    <img class="frontimg" src="img/dubbing2.png" alt="더빙">
+                    <img class="b_img" src="img/dubbing3.png" alt="더빙">
+                </i>
+                <i class="m_instagram">
+                    <img class="frontimg" src="img/instagram2.png" alt="인스타그램">
+                    <img class="b_img" src="img/instagram3.png" alt="인스타그램">
+                </i>
+                <i class="m_blog">
+                    <img class="frontimg" src="img/blog2.png" alt="네이버블로그">
+                    <img class="b_img" src="img/blog3.png" alt="네이버블로그">
+                </i>
+                <i class="m_kakaostory">
+                    <img class="frontimg" src="img/kakaostory2.png" alt="카카오스토리">
+                    <img class="b_img" src="img/kakaostory3.png" alt="카카오스토리">
+                </i>
+                <i class="m_youtube">
+                    <img class="frontimg" src="img/youtube2.png" alt="유튜브">
+                    <img class="b_img" src="img/youtube3.png" alt="유튜브">
+                </i>
+                <i class="m_naver_tv">
+                    <img class="frontimg" src="img/naver_tv2.png" alt="네이버TV">
+                    <img class="b_img" src="img/naver_tv3.png" alt="네이버TV">
+                </i>
+            </div>
+        </div>
+
+        <div class="m_line"></div>
+
+        <footer id="footer">
+            <div class="inner">
+                <p class="copyright">
+                    COPYRIGHT ⓒ 2020 BY SHOPA.CO.LTD.ALL RIGHTS RESERVERD.
+                </p>
+                <ul class="f_info">
+                    <li>개인정보 처리방침</li>
+                    <li>서울시 영등포구 여의도동 234-879</li>
+                    <!--after-->
+                </ul>
+                <div class="f_banner">
+                    <i>
+                        <img src="img/f_banner1.png" alt="FedEx">
+                    </i>
+                    <i>
+                        <img src="img/f_banner2.png" alt="PP">
+                    </i>
+                </div>
+
+                <div class="s1_sns_set">
+                    <i class="f_facebook">
+                        <img class="frontimg" src="img/facebook2.png" alt="페이스북">
+                        <img class="b_img" src="img/facebook3.png" alt="페이스북">
+                    </i>
+                    <i class="f_dubbing">
+                        <img class="frontimg" src="img/dubbing2.png" alt="더빙">
+                        <img class="b_img" src="img/dubbing3.png" alt="더빙">
+                    </i>
+                    <i class="f_instagram">
+                        <img class="frontimg" src="img/instagram2.png" alt="인스타그램">
+                        <img class="b_img" src="img/instagram3.png" alt="인스타그램">
+                    </i>
+                    <i class="f_blog">
+                        <img class="frontimg" src="img/blog2.png" alt="네이버블로그">
+                        <img class="b_img" src="img/blog3.png" alt="네이버블로그">
+                    </i>
+                    <i class="f_kakaostory">
+                        <img class="frontimg" src="img/kakaostory2.png" alt="카카오스토리">
+                        <img class="b_img" src="img/kakaostory3.png" alt="카카오스토리">
+                    </i>
+                    <i class="f_youtube">
+                        <img class="frontimg" src="img/youtube2.png" alt="유튜브">
+                        <img class="b_img" src="img/youtube3.png" alt="유튜브">
+                    </i>
+                    <i class="f_naver_tv">
+                        <img class="frontimg" src="img/naver_tv2.png" alt="네이버TV">
+                        <img class="b_img" src="img/naver_tv3.png" alt="네이버TV">
+                    </i>
+                </div>
+
+                <div class="go">
+                    GO
+                </div>
+                <div class="family_site">
+                    <p>
+                        <select>
+                            <option value="family_site">FAMILY SITE</option>
+                            <option value="family_site">FAMILY SITE2</option>
+                            <option value="family_site3">FAMILY SITE3</option>
+                        </select>
+                        <span>
+                            <i>
+                                <img src="img/more4.png" alt="더보기">
+                            </i>
+                        </span>
+                    </p>
+                </div>
+
+                <!--after-->
+            </div>
+        </footer>
+    </div>
+</body></html>
